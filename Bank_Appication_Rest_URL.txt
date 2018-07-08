@@ -1,0 +1,355 @@
+Request Header
+	Content-Type : application/json
+
+Create Account:
+---------------------
+API: 
+http://localhost:8080/accounts
+
+Method:
+POST
+
+Request:
+{
+	"firstName": "Uday Kumar Reddy",
+	"lastName": "Pamulapati",
+	"dob": "25-01-1991",
+	"accountType": "Saving"
+}
+
+Response:
+
+Success
+HTTP STATUS : 201
+{
+	"account": {
+		"firstName": "Uday Kumar Reddy",
+		"lastName": "Pamulapati",
+		"dob": "25-01-1991",
+		"createdDate": "08-07-2018",
+		"updatedDate": "08-07-2018",
+		"accountnumber": "1007214877",
+		"accountType": "Saving",
+		"balance": 0.0
+	},
+	"_links": {
+		"self": {
+			"href": "http://localhost:8080/accounts/1007214877"
+		},
+		"transactions": {
+			"href": "http://localhost:8080/accounts/1007214877/transactions"
+		}
+	}
+}
+Failure:
+In case of the validation errors
+HTTP Status : 400
+{
+	"message": "Validation Error",
+	"details": ["Date of birth cannot be null"]
+}
+
+
+Get Account Details
+---------------------------
+API:
+http://localhost:8080/accounts/{accountNumber}
+
+Method:
+GET
+
+Request
+-- No data parameters are required
+
+Response:
+http://localhost:8080/accounts/1053526980
+Success
+HTTP Status : 200
+{
+	"account": {
+		"firstName": "Uday Kumar Reddy",
+		"lastName": "Pamulapati",
+		"dob": "24-01-1991",
+		"createdDate": "08-07-2018",
+		"updatedDate": "08-07-2018",
+		"accountnumber": "1007214877",
+		"accountType": "Deposit",
+		"balance": 0.0
+	},
+	"_links": {
+		"self": {
+			"href": "http://localhost:8080/accounts/1007214877"
+		},
+		"transactions": {
+			"href": "http://localhost:8080/accounts/1007214877/transactions"
+		}
+	}
+}
+
+Failure
+In case if the account number is not found
+http://localhost:8080/accounts/1041305
+HTTP Status : 404
+{
+	"timestamp": "2018-07-08T10:58:01.133+0000",
+	"status": 404,
+	"error": "Not Found",
+	"message": "Account doesn't exists 1041305",
+	"path": "/accounts/1041305"
+}
+
+
+Edit Account Type
+-------------------------
+API:
+http://localhost:8080/accounts/{accountNumber}
+
+Method:
+PATCH
+
+Request:
+{
+	"accountType": "Deposit"
+}
+
+Response
+Success
+HTTP Status : 200
+{
+	"account": {
+		"firstName": "Uday Kumar Reddy",
+		"lastName": "Pamulapati",
+		"dob": "24-01-1991",
+		"createdDate": "08-07-2018",
+		"updatedDate": "08-07-2018",
+		"accountnumber": "1007214877",
+		"accountType": "Deposit",
+		"balance": 0.0
+	},
+	"_links": {
+		"self": {
+			"href": "http://localhost:8080/accounts/1007214877"
+		},
+		"transactions": {
+			"href": "http://localhost:8080/accounts/1007214877/transactions"
+		}
+	}
+}
+
+
+Failure
+Validation Error
+HTTP Status : 400
+{
+	"message": "Validation Error",
+	"details": ["Please enter the desired account type for the account process."]
+}
+
+In case if the account number is not found
+http://localhost:8080/accounts/1041305
+HTTP Status : 404
+{
+	"timestamp": "2018-07-08T10:58:01.133+0000",
+	"status": 404,
+	"error": "Not Found",
+	"message": "Account doesn't exists 1041305",
+	"path": "/accounts/1041305"
+}
+
+
+View Account Transactions:
+-------------------------------------
+http://localhost:8080/accounts/{accountNumber}/transactions
+
+Method:
+GET
+
+Request Params
+
+Response:
+Success Response
+
+HTTP Status
+200
+
+{
+  "accountTransactions": [{
+    "typeOfTrans": "DEPOSIT",
+    "fund": 1000.0,
+    "referenceId": "20180708194539099",
+    "referenceMsg": "Amount deposited into the account",
+    "createdDate": "08-07-2018"
+  }, {
+    "typeOfTrans": "WITHDRAWL",
+    "fund": 10.0,
+    "referenceId": "20180708194606278",
+    "referenceMsg": "Amount withdrawl from the account",
+    "createdDate": "08-07-2018"
+  }, {
+    "typeOfTrans": "FUND_TRANSFER",
+    "fund": 10.0,
+    "referenceId": "20180708194627874",
+    "referenceMsg": "Amount transfered from 1023982398 to 12346",
+    "createdDate": "08-07-2018"
+  }, {
+    "typeOfTrans": "EDIT_ACCOUNT",
+    "fund": 0.0,
+    "referenceId": "20180708194643628",
+    "referenceMsg": "Change of the account type from Deposit to Saving",
+    "createdDate": "08-07-2018"
+  }, {
+    "typeOfTrans": "EDIT_ACCOUNT",
+    "fund": 0.0,
+    "referenceId": "20180708194651814",
+    "referenceMsg": "Change of the account type from Saving to Current",
+    "createdDate": "08-07-2018"
+  }],
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/accounts/1023982398"
+    },
+    "transactions": {
+      "href": "http://localhost:8080/accounts/1023982398/transactions"
+    }
+  }
+}
+
+If no transactions are present
+HTTP Status: 204
+
+
+Deposit Amount
+----------------------
+
+API:
+http://localhost:8080/accounts/{accountNumber}
+
+Method:
+POST
+
+Request:
+{
+	"transactionType": "DEPOSIT",
+	"fund": 1000
+}
+
+Response:
+
+Success
+HTTP Status : 200
+{
+	"transaction": {
+		"referenceid": "20180708193811963",
+		"referencemsg": "Deposit request has been processed. Amount is creted to the account:1007214877 Available banalce is:1000.0"
+	},
+	"_links": {
+		"self": {
+			"href": "http://localhost:8080/accounts/1007214877"
+		},
+		"transactions": {
+			"href": "http://localhost:8080/accounts/1007214877/transactions"
+		}
+	}
+}
+
+Failure:
+
+Validation error
+HTTP Status : 400
+
+{"message":"Validation Error","details":["Transaction type cannot be blank.","Kinldy provide a valid transaction type"]}
+
+
+Withdraw Amount
+----------------------
+
+API:
+http://localhost:8080/accounts/{accountNumber}
+
+Method:
+POST
+
+Request:
+{
+	"transactionType": "WITHDRAW",
+	"fund": 1000
+}
+
+Response:
+
+Success
+HTTP Status : 200
+{
+  "transaction": {
+    "referenceid": "2018070819384149",
+    "referencemsg": "Withdrawl request has been processed from the account:1007214877 available balance is:900.0"
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/accounts/1007214877"
+    },
+    "transactions": {
+      "href": "http://localhost:8080/accounts/1007214877/transactions"
+    }
+  }
+}
+
+Failure:
+
+Validation error
+HTTP Status : 400
+
+{"message":"Validation Error","details":["Transaction type cannot be blank.","Kinldy provide a valid transaction type"]}
+
+HTTP Status 404
+
+{
+	"timestamp": "2018-07-08T11:52:22.439+0000",
+	"status": 404,
+	"error": "Not Found",
+	"message": "Account doesn't exists 1053428",
+	"path": "/accounts/1053428"
+}
+
+Transfer Amount
+-----------------------
+API:
+http://localhost:8080/accounts/{accountNumber}
+
+Method:
+POST
+
+Request:
+{
+	"transactionType": "TPT",
+	"fund": 100,
+	"beneficiaryAccountNumber": "12346"
+}
+
+Response:
+
+HTTP Status : 200
+{
+  "transaction": {
+    "referenceid": "20180708193907234",
+    "referencemsg": "Fund Trasnfer request has been processed. Amount has been debited from the account:1007214877 available balance is:800.0"
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/accounts/1007214877"
+    },
+    "transactions": {
+      "href": "http://localhost:8080/accounts/1007214877/transactions"
+    }
+  }
+}
+
+Failure
+Response:
+Validation errors
+HTTP Statuc Code:
+400
+{
+	"message": "Validation Error",
+	"details": ["Kinldy provide a valid Fund Value and the beneficiary account"]
+}
