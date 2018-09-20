@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+		<!-- Database connection settings -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/hibernate_db</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">root</property>
+
+		<!-- JDBC connection pool (use the built-in) -->
+		<property name="connection.pool_size">1</property>
+
+		<!-- SQL dialect -->
+		<!-- <property name="dialect">org.hibernate.dialect.MySQLDialect</property> -->
+		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+
+		<!-- Echo all executed SQL to stdout -->
+		<property name="show_sql">true</property>
+		
+		<!-- To convert the tables based on the vo object -->
+		<property name="hbm2ddl.auto">create</property>
+		<!-- <property name="hbm2ddl.auto">update</property> -->
+
+		<!-- Mapping data vo Classes -->
+		<!-- <mapping class="com.save.entity.first.example.UserDetails"/>
+		<mapping class="com.save.entity.first.example.UserDetailsGetters"/> 
+		<mapping class="com.hibernate.more.annotations.UserDetails"/>
+		<mapping class="com.hibernate.more.annotations.temporal.UserDetails"/>
+		<mapping class="com.hibernate.entity.UserDetails"/>
+		<mapping class="com.hibernate.entity.primary.keys.UserDetailsPrimaryKeys"/> 
+		<mapping class="com.hibernate.entity.primary.keys.seq.UserDetailsPrimaryKeysSeq"/>
+		<mapping class="com.hibernate.entity.embedded.objects.UserDetails"/>
+		<mapping class="com.hibernate.entity.embedded.objects.attributeoverride.UserDetails"/>
+		<mapping class="com.hibernate.entity.embedded.objects.id.UserDetails"/> 
+		<mapping class="com.hibernate.entity.embedded.collections.UserDetails"/> 
+		<mapping class="com.hibernate.entity.embedded.collections.configure.UserDetails"/>
+		<mapping class="com.hibernate.entity.embedded.collections.fetchtype.UserDetails"/> -->
+		
+		<!-- One 2 One Mapping Classes -->
+		<!-- <mapping class="com.hibernate.entity.mapping.one2one.One2OneUsrDtls"/>
+		<mapping class="com.hibernate.entity.mapping.one2one.One2OneVehicleDtls"/> -->
+		
+		<!-- One 2 Many Mapping -->
+		<!-- <mapping class="com.hibernate.entity.mapping.one2many.One2ManyUsrDtls"/>
+		<mapping class="com.hibernate.entity.mapping.one2many.One2ManyVehicleDtls"/> -->
+		
+		<!-- One 2 Many Mapping using Mapped by -->
+		<!-- <mapping class="com.hibernate.entity.mapping.one2many.mappedby.One2ManyUsrDtls"/>
+		<mapping class="com.hibernate.entity.mapping.one2many.mappedby.One2ManyVehicleDtls"/> -->
+		
+		<!-- Many 2 One Mapping -->
+		<!-- <mapping class="com.hibernate.entity.mapping.many2one.Many2OneUsrDtls"/>
+		<mapping class="com.hibernate.entity.mapping.many2one.Many2OneVehicleDtls"/> -->
+		
+		<!-- Many 2 Many mapping -->
+		<!-- <mapping class="com.hibernate.entity.mapping.many2many.Many2ManyUserDtls"/>
+		<mapping class="com.hibernate.entity.mapping.many2many.Many2ManyVehicleDtls"/> -->
+		
+		<!-- Mapping common properties -->
+		<mapping class="com.hibernate.entity.mapping.commonproperties.One2ManyUsrDtls"/>
+		<mapping class="com.hibernate.entity.mapping.commonproperties.One2ManyVehicleDtls"/>
+		
+	</session-factory>
+
+</hibernate-configuration>
