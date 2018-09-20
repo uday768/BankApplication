@@ -1,0 +1,40 @@
+package com.hibernate.util;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+
+public class HibernateUtil {
+
+	private static SessionFactory sessionFactory = buildSessionFactory();
+
+	private static SessionFactory buildSessionFactory() {
+		System.out.println("Invoking the build session factory");
+		try {
+			if (sessionFactory == null) {
+				System.out.println("There is no existing session factory so creating a new factory");
+				Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+				StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
+				serviceRegistryBuilder.applySettings(configuration.getProperties());
+				ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
+				sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+			}
+			System.out.println("Retruning the session factory for intreatring with the data base");
+			return sessionFactory;
+		} catch (Throwable ex) {
+			System.err.println("Initial SessionFactory creation failed." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+	}
+
+	public static SessionFactory getSessionFactory() {
+		System.out.println("Inside the get session factory method");
+		return sessionFactory;
+	}
+
+	public static void shutdown() {
+		System.out.println("Closing the session factory");
+		getSessionFactory().close();
+	}
+}
